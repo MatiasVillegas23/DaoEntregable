@@ -22,7 +22,7 @@ public class Main {
 		try {
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
-			//createTables(conn);
+			createTables(conn);
 			CSVParser productos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/productos.csv"));
 			CSVParser clientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/clientes.csv"));
 			CSVParser facturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas.csv"));
@@ -44,4 +44,36 @@ public class Main {
 		
 	}
 
+	private static void createTables(Connection conn) throws SQLException {
+		System.out.println("entro");
+		
+		String tablaProductos = "CREATE TABLE productos(" + 
+	"idProducto INT," + 
+	"nombre VARCHAR(45)," +
+	"valor DOUBLE," + 
+				"PRIMARY KEY(idProducto))";
+		
+	   String tablaClientes = "CREATE TABLE clientes(" + 
+				"idCliente INT," + 
+				"nombre VARCHAR(500)," +
+				"email VARCHAR(150)," + 
+							"PRIMARY KEY(idCliente))";
+	   
+	   String tablaFacturas = "CREATE TABLE facturas(" + 
+				"idCliente INT," + 
+				"idFactura INT," +
+							"PRIMARY KEY(idFactura))";
+	   
+	 /*  String tablaFacturasProductos = "CREATE TABLE facturasYproductos(" + 
+			   	"idProducto INT," + 
+				"idFactura INT," +
+				"cantidad INT," +
+	   */
+		conn.prepareCall(tablaProductos).execute();
+		conn.prepareCall(tablaClientes).execute();
+		conn.prepareCall(tablaFacturas).execute();
+		//conn.prepareCall(tablaFacturasProductos).execute();
+		
+		conn.commit();
+	}
 }

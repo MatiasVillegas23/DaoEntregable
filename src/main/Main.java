@@ -23,10 +23,10 @@ public class Main {
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
 			//createTables(conn);
-			CSVParser productos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("C:\\Users\\Juans\\OneDrive\\Documentos\\Facultad\\Arquitecturas Web\\tp1-archivos\\productos.csv"));
-			CSVParser clientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("C:\\Users\\Juans\\OneDrive\\Documentos\\Facultad\\Arquitecturas Web\\tp1-archivos\\clientes.csv"));
-			CSVParser facturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("C:\\Users\\Juans\\OneDrive\\Documentos\\Facultad\\Arquitecturas Web\\tp1-archivos\\facturas.csv"));
-			CSVParser facturasYproductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("C:\\Users\\Juans\\OneDrive\\Documentos\\Facultad\\Arquitecturas Web\\tp1-archivos\\facturas-productos.csv"));
+			CSVParser productos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/productos.csv"));
+			CSVParser clientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/clientes.csv"));
+			CSVParser facturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas.csv"));
+			CSVParser facturasYproductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas-productos.csv"));
 			
 			ClienteDaoImpl cliente = new ClienteDaoImpl(conn);
 			cliente.insert(clientes);

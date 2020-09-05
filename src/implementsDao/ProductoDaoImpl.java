@@ -78,7 +78,7 @@ public class ProductoDaoImpl implements ProductoDao {
 					"from factura_producto fp " + 
 					"inner join producto p on (fp.idProducto = p.idProducto) " + 
 					"GROUP by fp.idProducto " + 
-					"ORDER by sum(cantidad) * p.valor DESC " + 
+					"ORDER by sum(cantidad * p.valor) DESC " + 
 					"LIMIT 1";
 					
 			PreparedStatement ps = conn.prepareStatement(select);

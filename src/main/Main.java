@@ -17,6 +17,7 @@ public class Main {
 
 		String uri = "jdbc:Mysql://localhost/jdbs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		try {
+			//LOS INSERT FUNCIONAN SOLO UNA VEZ, YA QUE NO CONTROLAMOS KEYS DUPLICADAS
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
 			createTables(conn);
@@ -26,15 +27,16 @@ public class Main {
 			CSVParser facturasYproductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas-productos.csv"));
 
 			ClienteDaoImpl cliente = new ClienteDaoImpl(conn);
-			//cliente.insert(clientes);
+			cliente.insert(clientes);
 
 			FacturaDaoImpl factura = new FacturaDaoImpl(conn);
-			//factura.insert(facturas);
+			factura.insert(facturas);
 
 			ProductoDaoImpl producto = new ProductoDaoImpl (conn);
-			//producto.insert(productos);
-			producto.insert(facturasYproductos);
+			producto.insert(productos);
+			producto.addFacturasYproductos(facturasYproductos);
 			
+			System.out.println(cliente.getMasRecaudo());
 			System.out.println(producto.getMasRecaudo());
 			conn.close();
 		} catch (SQLException e) {

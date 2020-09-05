@@ -1,11 +1,9 @@
 package implementsDao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVParser;
@@ -54,8 +52,8 @@ public class ProductoDaoImpl implements ProductoDao {
 		return null;
 	}
 
-	public static void addFacturasYproductos(CSVParser facturasYproductos, Connection conn) throws SQLException {
-		String insert = "INSERT INTO facturasYproductos(idProducto,idFactura,cantidad) VALUES (?,?,?)";
+	public void addFacturasYproductos(CSVParser facturasYproductos) throws SQLException {
+		String insert = "INSERT INTO factura_producto(idProducto,idFactura,cantidad) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: facturasYproductos) {
 			int idProducto = Integer.parseInt(row.get("idProducto"));
@@ -76,21 +74,19 @@ public class ProductoDaoImpl implements ProductoDao {
 			conn.setCatalog("jdbs");
 			conn.setAutoCommit(false);
 
-			String select = "select * " + 
+			String select = "select p.idProducto, p.nombre, p.valor " + 
 					"from factura_producto fp " + 
 					"inner join producto p on (fp.idProducto = p.idProducto) " + 
 					"GROUP by fp.idProducto " + 
 					"ORDER by sum(cantidad) * p.valor DESC " + 
 					"LIMIT 1";
-			
+					
 			PreparedStatement ps = conn.prepareStatement(select);
-			
 			ResultSet rs = ps.executeQuery();
-			//if (rs != null) {
+			while(rs.next()) {
 				p1 = new Producto(rs.getInt(1),rs.getString(2),rs.getDouble(3));
 				return p1;
-			//}
-
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -2,6 +2,7 @@ package implementsDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import daos.ClienteDao;
 import products.Cliente;
+import products.Producto;
 
 public class ClienteDaoImpl implements ClienteDao {
 	private Connection conn;
@@ -55,4 +57,24 @@ public class ClienteDaoImpl implements ClienteDao {
 		return null;
 	}
 
+	public Cliente getMasRecaudo() {
+		Cliente c1;
+		try {
+			
+			conn.setCatalog("jdbs");
+			conn.setAutoCommit(false);
+
+			String select = "";
+					
+			PreparedStatement ps = conn.prepareStatement(select);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				c1 = new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3));
+				return c1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -20,7 +20,7 @@ private Connection conn;
 
 	@Override
 	public void insert(CSVParser facturas) throws SQLException {
-		String insert = "INSERT INTO facturas(idCliente,idFactura) VALUES (?,?)";
+		String insert = "INSERT INTO factura(idCliente,idFactura) VALUES (?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: facturas) {
 		int	idCliente = Integer.parseInt(row.get("idCliente"));

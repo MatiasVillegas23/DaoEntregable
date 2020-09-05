@@ -36,8 +36,8 @@ public class Main {
 			producto.insert(productos);
 			producto.addFacturasYproductos(facturasYproductos);
 			
-			System.out.println(cliente.getMasRecaudo());
-			System.out.println(producto.getMasRecaudo());
+			System.out.println("El producto que mas recaudo es: "+producto.getMasRecaudo());
+			//System.out.println("El cliente que mas recaudo es: "+cliente.getMasRecaudo());
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

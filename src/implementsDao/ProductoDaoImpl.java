@@ -18,7 +18,8 @@ public class ProductoDaoImpl implements ProductoDao {
 	public ProductoDaoImpl (Connection conn) {
 		this.conn = conn;
 	}
-	@Override
+	
+	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser productos) throws SQLException {
 		String insert = "INSERT INTO producto(idProducto, nombre, valor) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
@@ -87,6 +88,7 @@ public class ProductoDaoImpl implements ProductoDao {
 				p1 = new Producto(rs.getInt(1),rs.getString(2),rs.getDouble(3));
 				return p1;
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

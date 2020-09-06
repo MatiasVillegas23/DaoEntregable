@@ -20,24 +20,31 @@ public class Main {
 			//LOS INSERT FUNCIONAN SOLO UNA VEZ, YA QUE NO CONTROLAMOS KEYS DUPLICADAS
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
+			
+			//se crean todas las tablas con el siguiente metodo si que es que no existen
 			createTables(conn);
+			//se parsean los datos de los csv en sus respectivas variables
 			CSVParser productos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/productos.csv"));
 			CSVParser clientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/clientes.csv"));
 			CSVParser facturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas.csv"));
 			CSVParser facturasYproductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/facturas-productos.csv"));
-
-			ClienteDaoImpl cliente = new ClienteDaoImpl(conn);
-			cliente.insert(clientes);
-
-			FacturaDaoImpl factura = new FacturaDaoImpl(conn);
-			factura.insert(facturas);
-
-			ProductoDaoImpl producto = new ProductoDaoImpl (conn);
-			producto.insert(productos);
-			producto.addFacturasYproductos(facturasYproductos);
 			
+	        //se crean los Daos de las tablas a utilizar y se llama a los metodos para cargar los datos
+			ClienteDaoImpl cliente = new ClienteDaoImpl(conn);
+			//cliente.insert(clientes);
+			
+			FacturaDaoImpl factura = new FacturaDaoImpl(conn);
+			//factura.insert(facturas);
+			
+			ProductoDaoImpl producto = new ProductoDaoImpl (conn);
+			//producto.insert(productos);
+			//producto.addFacturasYproductos(facturasYproductos);
+			
+			//se llaman a los metodos necesarios para los puntos 3 y 4
 			System.out.println("El producto que mas recaudo es: "+producto.getMasRecaudo());
-			//System.out.println("El cliente que mas recaudo es: "+cliente.getMasRecaudo());
+			
+			//Cambiar para imprimir la lista de clientes
+			//System.out.println("Lista de clientes ordenados por facturacion: "+ cliente.getClientesPorFacturacion());
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -45,6 +52,10 @@ public class Main {
 
 	}
 
+	
+	//Cada tabla con sus claves primarias y foreing keys 
+	//es creada con un codigo sql dentro de un string
+	//que es ejecutado con el query 
 	private static void createTables(Connection conn) throws SQLException {
 
 		String tablaProductos = "CREATE TABLE IF NOT EXISTS producto(" + 

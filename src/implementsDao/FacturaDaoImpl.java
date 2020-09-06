@@ -11,6 +11,7 @@ import org.apache.commons.csv.CSVRecord;
 import daos.FacturaDao;
 import products.Factura;
 
+
 public class FacturaDaoImpl implements FacturaDao{
 private Connection conn;
 	
@@ -18,7 +19,7 @@ private Connection conn;
 		this.conn = conn;
 	}
 
-	@Override
+	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser facturas) throws SQLException {
 		String insert = "INSERT INTO factura(idCliente,idFactura) VALUES (?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);

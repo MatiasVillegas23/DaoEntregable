@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVParser;
@@ -13,14 +14,14 @@ import daos.ClienteDao;
 import products.Cliente;
 import products.Producto;
 
+
 public class ClienteDaoImpl implements ClienteDao {
 	private Connection conn;
-	
 	public ClienteDaoImpl (Connection conn) {
 		this.conn = conn;
 	}
 	
-	@Override
+	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser clientes) throws SQLException {
 		String insert = "INSERT INTO cliente(idCliente, nombre, email) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
@@ -35,32 +36,27 @@ public class ClienteDaoImpl implements ClienteDao {
 		conn.commit();		
 	}
 
-	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public List<Cliente> select() {
 		
 		return null;
 	}
 	
-	public List<Cliente> clientesPorFacturacion() {
-		return null;
-	}
-
-	public Cliente getMasRecaudo() {
-		Cliente c1;
-		try {
-			
+	
+	//se ejecutan los querys del codigo sql para retornar la lista de clientes ordenada por facturacion 
+	public List<Cliente> getClientesPorFacturacion() {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		Cliente c;
+		try {			
 			conn.setCatalog("jdbs");
 			conn.setAutoCommit(false);
 
@@ -69,9 +65,10 @@ public class ClienteDaoImpl implements ClienteDao {
 			PreparedStatement ps = conn.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				c1 = new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3));
-				return c1;
+				c = new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3));
+				clientes.add(c);
 			}
+			return clientes;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

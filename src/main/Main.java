@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 
 import implementsDao.*;
+import products.Cliente;
 
 public class Main {
 
@@ -20,6 +23,8 @@ public class Main {
 			//LOS INSERT FUNCIONAN SOLO UNA VEZ, YA QUE NO CONTROLAMOS KEYS DUPLICADAS
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
+			
+			List<Cliente> clientesFacturacion = new ArrayList<>();
 			
 			//se crean todas las tablas con el siguiente metodo si que es que no existen
 			createTables(conn);
@@ -44,7 +49,12 @@ public class Main {
 			System.out.println("El producto que mas recaudo es: "+producto.getMasRecaudo());
 			
 			//Cambiar para imprimir la lista de clientes
-			//System.out.println("Lista de clientes ordenados por facturacion: "+ cliente.getClientesPorFacturacion());
+			clientesFacturacion = cliente.getClientesPorFacturacion(); 
+			//System.out.println("Lista de clientes ordenados por facturacion:);
+			for (Cliente c : clientesFacturacion) {
+				System.out.println(c.toString());
+			}
+			
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

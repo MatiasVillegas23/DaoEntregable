@@ -68,6 +68,7 @@ public class ProductoDaoImpl implements ProductoDao {
 		conn.commit();
 	}
 
+	//retorna el producto que mas dinero en ventas genero
 	public Producto getMasRecaudo() {
 		Producto p1;
 		try {

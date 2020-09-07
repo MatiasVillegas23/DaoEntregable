@@ -36,21 +36,21 @@ public class Main {
 			
 	        //se crean los Daos de las tablas a utilizar y se llama a los metodos para cargar los datos
 			ClienteDaoImpl cliente = new ClienteDaoImpl(conn);
-			//cliente.insert(clientes);
+			cliente.insert(clientes);
 			
 			FacturaDaoImpl factura = new FacturaDaoImpl(conn);
-			//factura.insert(facturas);
+			factura.insert(facturas);
 			
 			ProductoDaoImpl producto = new ProductoDaoImpl (conn);
-			//producto.insert(productos);
-			//producto.addFacturasYproductos(facturasYproductos);
+			producto.insert(productos);
+			producto.addFacturasYproductos(facturasYproductos);
 			
 			//se llaman a los metodos necesarios para los puntos 3 y 4
 			System.out.println("El producto que mas recaudo es: "+producto.getMasRecaudo());
 			
-			//Cambiar para imprimir la lista de clientes
+			//se carga en una variable la lista de clientes y se imprime
 			clientesFacturacion = cliente.getClientesPorFacturacion(); 
-			//System.out.println("Lista de clientes ordenados por facturacion:);
+			System.out.println("Lista de clientes ordenados por facturacion: ");
 			for (Cliente c : clientesFacturacion) {
 				System.out.println(c.toString());
 			}

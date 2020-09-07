@@ -52,15 +52,20 @@ public class ClienteDaoImpl implements ClienteDao {
 	}
 	
 	
-	//se ejecutan los querys del codigo sql para retornar la lista de clientes ordenada por facturacion 
+	//se ejecuta  codigo sql para retornar la lista de clientes ordenada por facturacion 
 	public List<Cliente> getClientesPorFacturacion() {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		Cliente c;
 		try {			
 			conn.setCatalog("jdbs");
 			conn.setAutoCommit(false);
-
-			String select = "";
+			String select = "SELECT C.idCliente, C.nombre, C.email " + 
+					"from cliente C " + 
+					"inner join factura F on (C.IdCliente = F.IdCliente) " + 
+					"inner join Factura_Producto FP on (F.IdFactura = FP.IdFactura) " + 
+					"inner join Producto P on (FP.IdProducto = P.IdProducto) " + 
+					"GROUP by c.idCliente " + 
+					"ORDER by  SUM(FP.cantidad * P.valor) DESC";
 					
 			PreparedStatement ps = conn.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();

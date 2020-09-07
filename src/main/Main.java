@@ -20,7 +20,6 @@ public class Main {
 
 		String uri = "jdbc:Mysql://localhost/jdbs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		try {
-			//LOS INSERT FUNCIONAN SOLO UNA VEZ, YA QUE NO CONTROLAMOS KEYS DUPLICADAS
 			Connection conn = DriverManager.getConnection(uri, "root", "");
 			conn.setAutoCommit(false);
 			

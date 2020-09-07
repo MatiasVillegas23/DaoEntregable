@@ -21,7 +21,7 @@ public class ProductoDaoImpl implements ProductoDao {
 	
 	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser productos) throws SQLException {
-		String insert = "INSERT INTO producto(idProducto, nombre, valor) VALUES (?,?,?)";
+		String insert = "INSERT IGNORE INTO producto(idProducto, nombre, valor) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: productos) {
 			int	idProducto = Integer.parseInt(row.get("idProducto"));
@@ -54,7 +54,7 @@ public class ProductoDaoImpl implements ProductoDao {
 	}
 
 	public void addFacturasYproductos(CSVParser facturasYproductos) throws SQLException {
-		String insert = "INSERT INTO factura_producto(idProducto,idFactura,cantidad) VALUES (?,?,?)";
+		String insert = "INSERT IGNORE INTO factura_producto(idProducto,idFactura,cantidad) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: facturasYproductos) {
 			int idProducto = Integer.parseInt(row.get("idProducto"));

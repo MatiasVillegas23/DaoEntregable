@@ -21,7 +21,7 @@ private Connection conn;
 
 	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser facturas) throws SQLException {
-		String insert = "INSERT INTO factura(idCliente,idFactura) VALUES (?,?)";
+		String insert = "INSERT IGNORE INTO factura(idCliente,idFactura) VALUES (?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: facturas) {
 		int	idCliente = Integer.parseInt(row.get("idCliente"));

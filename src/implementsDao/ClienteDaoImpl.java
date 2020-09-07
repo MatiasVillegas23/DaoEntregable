@@ -23,7 +23,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	
 	//metodo con el codigo sql para ingresar los datos del CSVParser y parsear los strings a sus respectivos atributos
 	public void insert(CSVParser clientes) throws SQLException {
-		String insert = "INSERT INTO cliente(idCliente, nombre, email) VALUES (?,?,?)";
+		String insert = "INSERT IGNORE INTO cliente(idCliente, nombre, email) VALUES (?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(insert);
 		for(CSVRecord row: clientes) {
 		int	idCliente = Integer.parseInt(row.get("idCliente"));
